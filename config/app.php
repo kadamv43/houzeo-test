@@ -134,6 +134,9 @@ return [
     |
     */
 
+    'smarty_street_auth_id'=> env('SMARTY_STREET_AUTH_ID'),
+    'smarty_street_auth_token'=> env('SMARTY_STREET_AUTH_TOKEN'),
+
     'providers' => [
 
         /*

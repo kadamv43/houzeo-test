@@ -37,7 +37,7 @@ class HomeController extends Controller
     {
         $request = $request->validated();
         $search_query = $request['search_query'];
-        $url = 'https://us-autocomplete.api.smartystreets.com/suggest?auth-id=07bef87b-2e89-431e-47d1-540a04e1c37d&auth-token=wpluhygXVElWp0OtwwT8&prefix=' . $search_query;
+        $url = 'https://us-autocomplete.api.smartystreets.com/suggest?auth-id='.config('app.smarty_street_auth_id').'&auth-token='.config('app.smarty_street_auth_token').'&prefix=' . $search_query;
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $url);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
