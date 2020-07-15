@@ -11,4 +11,8 @@
 |
 */
 
+use Illuminate\Support\Facades\Route;
+
 Route::get('/', 'HomeController@index');
+Route::post('search-query', ['as' => 'search-query', 'uses' => 'HomeController@search_query']);
+Route::post('submit-form', ['as' => 'submit-form', 'uses' => 'HomeController@submit_form']);
