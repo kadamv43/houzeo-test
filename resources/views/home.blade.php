@@ -250,7 +250,7 @@
                     }
                 });
             }
-            , minLength: 2
+            , minLength: 1
             , select: function(event, ui) {
                 console.log(ui.item.label);
                 console.log(this.value);
@@ -258,9 +258,6 @@
                 $('[name=city]').val(ui.item.city);
                 $('[name=state]').val(ui.item.state);
                 $('#map').show();
-                log(ui.item ?
-                    "Selected: " + ui.item.label :
-                    "Nothing selected, input was " + this.value);
             }
             , open: function() {
                 $(this).removeClass("ui-corner-all").addClass("ui-corner-top");
