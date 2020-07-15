@@ -116,7 +116,7 @@
                                         <div class="col-md-2 offset-md-1">
                                             <div class="property-radio">
                                                 <label for="prop1">
-                                                    <img src="{{asset('assets/images/single_home.png')}}" />
+                                                    <img src="{{asset('assets/images/1.png')}}" />
                                                     <label>Single Family Home</label>
                                                     <input id="prop1" type="radio" class="form-control" value="1" name="property_type" required />
                                                 </label>
