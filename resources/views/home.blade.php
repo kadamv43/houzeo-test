@@ -174,19 +174,24 @@
 
         <div class="row">
             <div class="col-md-12">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th scope="col">Sr. Number</th>
-                            <th scope="col">Street Address</th>
-                            <th scope="col">City</th>
-                            <th scope="col">State</th>
-                            <th scope="col">Property Type</th>
-                        </tr>
-                    </thead>
-                    <tbody class="tbody">
-                    </tbody>
-                </table>
+                <div class="card">
+                    <div class="card-body">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Sr. Number</th>
+                                    <th scope="col">Street Address</th>
+                                    <th scope="col">City</th>
+                                    <th scope="col">State</th>
+                                    <th scope="col">Property Type</th>
+                                </tr>
+                            </thead>
+                            <tbody class="tbody">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
@@ -274,8 +279,9 @@
                 if (res.code == '100') {
                     let table_data = '';
                     $.each(res.data, function(key, val) {
+                        key = key + 1;
                         table_data += '<tr>' +
-                            '<td>' + val.id + '</td>' +
+                            '<td>' + key + '</td>' +
                             '<td><a target="_blank" href="https://www.google.co.in/maps/search/' + val.street_address + '" >' + val.street_address + '</a></td>' +
                             '<td>' + val.city + '</td>' +
                             '<td>' + val.state + '</td>' +
