@@ -24,6 +24,7 @@ class HomeController extends Controller
         $search_data->state =  $request['state'];
         $search_data->zip =  $request['zipcode'];
         $search_data->property_type =  $request['property_type'];
+        $search_data->county =  $request['county'];
 
         if ($search_data->save()) {
             $data = $search_data->orderBy('id', 'desc')->with('property_type')->get();

@@ -28,7 +28,8 @@ class SearchData extends FormRequest
             'state' => 'required',
             'city' => 'required',
             'zipcode' => 'required',
-            'property_type' => 'required'
+            'property_type' => 'required',
+            'county' => 'required'
         ];
     }
 }

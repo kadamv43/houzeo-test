@@ -79,6 +79,7 @@
                                                         <label>Street Address</label>
                                                         {{csrf_field()}}
                                                         <input type="text" placeholder="Search address" id="tags" class="form-control" name="street_address" autocomplete="off" required />
+                                                        <input type="hidden" value="" name="county" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -184,6 +185,7 @@
                                     <th scope="col">City</th>
                                     <th scope="col">State</th>
                                     <th scope="col">Property Type</th>
+                                    <th scope="col">County</th>
                                 </tr>
                             </thead>
                             <tbody class="tbody">
@@ -205,8 +207,11 @@
 <script>
     let map;
     let geocoder;
+    let infowindow;
     let search_query_url = "{{route('search-query')}}";
     let submit_form_url = "{{route('submit-form')}}";
+    let zipcode;
+    let county;
 
     function initMap() {
         let place = {
@@ -219,6 +224,7 @@
         });
 
         geocoder = new google.maps.Geocoder();
+        infowindow = new google.maps.InfoWindow();
 
     }
 
@@ -245,6 +251,7 @@
                                 , value: item.text
                                 , city: item.city
                                 , state: item.state
+                                , zipcode: zipcode
                             }
                         }));
                     }
@@ -255,6 +262,7 @@
                 console.log(ui.item.label);
                 console.log(this.value);
                 codeAddress(geocoder, map);
+                //geocodeLatLng(geocoder, map, infowindow);
                 $('[name=city]').val(ui.item.city);
                 $('[name=state]').val(ui.item.state);
                 $('#map').show();
@@ -283,6 +291,7 @@
                             '<td>' + val.city + '</td>' +
                             '<td>' + val.state + '</td>' +
                             '<td>' + val.property_type.name + '</td>' +
+                            '<td>' + val.county + '</td>' +
                             '</tr>';
                     })
                     $('.tbody').text('');
@@ -302,14 +311,60 @@
         geocoder.geocode({
             'address': $('[name=street_address]').val()
         }, function(results, status) {
+
             if (status === 'OK') {
+                console.log(results);
                 map.setCenter(results[0].geometry.location);
+
+                $.each(results[0].address_components, function(key, val) {
+
+                    if (val.types[0] === "postal_code") {
+                        zipcode = val.long_name;
+                    }
+
+                    if (val.types[0] === "administrative_area_level_2") {
+                        county = val.long_name;
+                    }
+
+                });
+                console.log(zipcode);
+                $('[name=zipcode]').val(zipcode);
+                $('[name=county]').val(county);
                 var marker = new google.maps.Marker({
                     map: map
                     , position: results[0].geometry.location
                 });
             } else {
                 alert('Geocode was not successful for the following reason: ' + status);
+            }
+        });
+    }
+
+    function geocodeLatLng(geocoder, map, infowindow) {
+        var input = document.getElementById("latlng").value;
+        var latlngStr = input.split(",", 2);
+        var latlng = {
+            lat: parseFloat(latlngStr[0])
+            , lng: parseFloat(latlngStr[1])
+        };
+        geocoder.geocode({
+            location: latlng
+        }, function(results, status) {
+            console.log(results);
+            if (status === "OK") {
+                if (results[0]) {
+                    map.setZoom(11);
+                    var marker = new google.maps.Marker({
+                        position: latlng
+                        , map: map
+                    });
+                    infowindow.setContent(results[0].formatted_address);
+                    infowindow.open(map, marker);
+                } else {
+                    window.alert("No results found");
+                }
+            } else {
+                window.alert("Geocoder failed due to: " + status);
             }
         });
     }

@@ -18,6 +18,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $state
  * @property string $zip
  * @property int $property_type
+ * @property string $county
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  *
@@ -25,18 +26,19 @@ use Illuminate\Database\Eloquent\Model;
  */
 class SearchDatum extends Model
 {
-    protected $table = 'search_data';
+	protected $table = 'search_data';
 
-    protected $casts = [
-        'property_type' => 'int'
-    ];
+	protected $casts = [
+		'property_type' => 'int'
+	];
 
-    protected $fillable = [
-        'street_address',
-        'city',
-        'state',
-        'zip',
-        'property_type'
+	protected $fillable = [
+		'street_address',
+		'city',
+		'state',
+		'zip',
+		'property_type',
+		'county'
     ];
 
     public function property_type()
